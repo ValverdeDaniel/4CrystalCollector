@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Crystal Collector</title>
+    <style type = "text/css">
+        .crystal-image{
+            width: 300px;
+            height: 300px;
+        }
+        .Rules{
+            width: 70%;
+            border-style: solid;
+            border-width: 1px 1px 1px 1px;
+            background-color: RGB(223, 193, 42);
+            color: green;
+            
+        }
+        
+        .gems{
+            width: 50%;
+            border-style: solid;
+            border-width: 1px 1px 1px 1px;
+        }
+
+        .numberToMatch{
+            border-style: solid;
+            width: 70%;
+            background-color: blue;
+
+        }
+
+        .winsAndLosses{
+            border-style:solid;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- create skeleton of UI so that we can see:
+    
+        the background
+    
+        the area for the scoreboards and 
+    
+        the gems -->
+    <div class = "header">
+        <h1>Crystal Collector</h1>
+    </div>
+    <div class = "Rules">
+        <h3>Here's how you play the game</h3>
+    </br>
+    <ol>
+        <li>there are four crystals</li>
+        <ul>
+            <li id="blueGem">Blue</li>
+            <li id="greenGem">Green</li>
+            <li id="redGem">Red</li>
+            <li id="yellowGem">Yellow</li>
+        </ul>    
+        <li>Here's How the app works:</li>
+            <li>There will be four crystals displayed as buttons on the page</li>
+            <li>The player will be shown a random number at the start of the game.</li>
+            <li>When the player clicks on a crystal, it will add a specific amount of points to the player's total score.</li>
+            <li>The player will not see the exact amount of points per crystal unless they click on a crystal</li>
+            <li>Once a crystal is clicked on the player's score will update</li>
+            <li>The player wins if the total score if their total score matches the random number from the beginning of the game.</li>
+            <li>The player loses if their score goes above the random number.</li>
+            <li>The game will restart if the player wins or loses.</li>
+            <li>When the game begins again, the player should see a new random number, it is not required to hit the refresh page as a means to restart the game. If you do it will not keep your values for wins and losses.</li>
+    </ol>
+    </div>
+    <div class="numberToMatch">
+        <h2>Number To Get:
+            <span id= "randomNumber"></span>
+        </h2>
+    </div>
+    <div class="winsAndLosses">
+        <h2>Wins: 
+            <span id= "numberWins"></span>
+            </br>
+            Losses:
+            <span id= "numberLosses"></span>
+        </h2>
+    </div>
+    <div class="gems">
+        <img src="assets/images/blue.png" id ="one" alt="Blue Gem">
+        <img src="assets/images/green.png" id="two" alt="Green Gem">
+        <img src="assets/images/red.png" id="three" alt="Red Gem">
+        <img src="assets/images/yellow.png" id="four" alt="Yellow Gem">
+    </div>
+    <div class="userTotal">
+        <h2>Your total score is:
+            <span id="finalTotal"></span>
+        </h2>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+        <script type = "text/javascript">
+            $( document ).ready(function(){
+                var Random=Math.floor(Math.random()*101+19)
+
+                $('#randomNumber').text(Random);
+                // Appending random number to the randomNumber id in the html doc
+                //
+                var num1 = Math.floor(Math.random()*11+1)
+                var num2 = Math.floor(Math.random()*11+1)
+                var num3 = Math.floor(Math.random()*11+1)
+                var num4 = Math.floor(Math.random()*11+1)
+                
+
+                var userTotal = 0;
+                var wins = 0;
+                var losses = 0;
+
+                //declaring variables
+
+                $('#numberWins').text(wins);
+                $('#numberLosses').text(losses);
+
+                //reset game and its variables: userTotal, gem num 1-4
+
+                function reset(){
+                    Random=Math.floor(Math.random()*101+19);
+                    console.log(Random);
+                    $('#randomNumber').text(Random);
+                    num1 = Math.floor(Math.random()*11+1);
+                    console.log(num1);
+                    num2 = Math.floor(Math.random()*11+1);
+                    console.log(num2);
+                    num3 = Math.floor(Math.random()*11+1);
+                    console.log(num3);
+                    num4 = Math.floor(Math.random()*11+1);
+                    console.log(num4);
+                    userTotal = 0;
+                    $('#finalTotal').text(userTotal);
+                    };
+
+            //function won: alert that user won, add a point to the wins, reset the function
+                function won(){
+                alert("You won!");
+                    wins++;
+                    $('#numberWins').text(wins);
+                    reset();
+                }
+            //function lost()
+                function lost(){
+                alert("You lose!");
+                    losses++;
+                $('#numberLosses').text(losses);
+                reset()
+                }
+
+            //sets click for jewels
+                $('#one').on('click', function(){
+                    userTotal = userTotal + num1;
+                    console.log("New userTotal = " + userTotal);
+                    $('#finalTotal').text(userTotal);
+
+                        if (userTotal == Random) {
+                            won();
+                        }
+                        else if (userTotal > Random) {
+                            lost();
+                        }
+                })
+
+                $('#two').on('click', function(){
+                    userTotal = userTotal + num2;
+                    console.log("New userTotal = " + userTotal);
+                    $('#finalTotal').text(userTotal);
+
+                        if (userTotal == Random) {
+                            won();
+                        }
+                        else if (userTotal > Random) {
+                            lost();
+                        }
+                })
+
+                $('#three').on ('click', function(){
+                    userTotal = userTotal + num3;
+                    console.log("New userTotal= " + userTotal);
+                    $('#finalTotal').text(userTotal);
+                    
+                        if (userTotal == Random) {
+                            won();
+                        }else if (userTotal > Random) {
+                            lost();
+                        }
+
+                })
+
+                $('#four').on ('click', function(){
+                    userTotal = userTotal + num4;
+                    console.log("New userTotal= " + userTotal);
+                    $('#finalTotal').text(userTotal);
+
+                        if (userTotal == Random) {
+                            won();
+                        
+                        } else if (userTotal > Random) {
+                            lost();
+                        }
+                });
+            });
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
